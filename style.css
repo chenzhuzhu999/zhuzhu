@@ -1,0 +1,236 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    z-index: 1;
+    opacity: 0;
+    animation: showText 3s ease-in forwards;
+    animation-delay: 2s;
+    position: relative;
+}
+
+h1 {
+    font-size: 4em;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, 
+        #ff0000, #ff69b4, #ffd700, #ff1493, #ff0000);
+    background-size: 400% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 20px rgba(255, 105, 180, 0.5),
+        0 0 40px rgba(255, 20, 147, 0.3),
+        0 0 60px rgba(255, 0, 0, 0.2);
+    animation: 
+        textGlow 2s ease-in-out infinite alternate,
+        gradientMove 6s linear infinite,
+        floating 3s ease-in-out infinite;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+h1::before, h1::after {
+    content: '✨';
+    position: absolute;
+    font-size: 0.5em;
+    animation: sparkle 1.5s ease-in-out infinite alternate;
+}
+
+h1::before {
+    left: -30px;
+    top: 50%;
+}
+
+h1::after {
+    right: -30px;
+    top: 50%;
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 
+            0 0 20px rgba(255, 105, 180, 0.5),
+            0 0 40px rgba(255, 20, 147, 0.3),
+            0 0 60px rgba(255, 0, 0, 0.2);
+    }
+    100% {
+        text-shadow: 
+            0 0 30px rgba(255, 105, 180, 0.8),
+            0 0 60px rgba(255, 20, 147, 0.6),
+            0 0 90px rgba(255, 0, 0, 0.4);
+    }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes showText {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.5) translateY(50px); 
+        filter: blur(10px);
+    }
+    50% {
+        filter: blur(5px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+.fireworks {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    animation: firework 2s ease-out infinite;
+    box-shadow: 0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 30px #fff;
+}
+
+.fireworks::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: trail 2s ease-out infinite;
+    background: linear-gradient(to top, transparent, #fff);
+}
+
+@keyframes trail {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    30% {
+        height: 100px;
+        opacity: 0.5;
+    }
+    100% {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes firework {
+    0% {
+        transform: translateY(100vh);
+        background: #fff;
+    }
+    50% {
+        transform: translateY(20vh);
+    }
+    60% {
+        transform: translateY(20vh);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(20vh);
+        opacity: 0;
+    }
+}
+
+.firework-particles {
+    position: absolute;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: particle 1s ease-out forwards;
+}
+
+@keyframes particle {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 1s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.3; }
+}
+
+/* 添加手机适配的样式 */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+        padding: 10px;
+    }
+
+    h1::before {
+        left: -20px;
+    }
+
+    h1::after {
+        right: -20px;
+    }
+
+    .fireworks {
+        width: 4px;
+        height: 4px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+        letter-spacing: 1px;
+    }
+} 

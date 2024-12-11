@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生日祝福</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <h1>曾女士生日快乐</h1>
+    </div>
+
+    <div class="fireworks"></div>
+    <div class="fireworks"></div>
+    <div class="fireworks"></div>
+    <div class="fireworks"></div>
+    <div class="fireworks"></div>
+
+    <script>
+        // 创建星星
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const starCount = 200;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 1}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function createFireworks() {
+            const fireworks = document.querySelectorAll('.fireworks');
+            
+            fireworks.forEach(fw => {
+                const left = Math.random() * 100;
+                const animationDuration = 1 + Math.random() * 2;
+                
+                fw.style.left = left + 'vw';
+                fw.style.animationDuration = animationDuration + 's';
+                
+                fw.addEventListener('animationend', () => {
+                    createExplosion(fw.offsetLeft, fw.offsetTop);
+                    fw.style.left = Math.random() * 100 + 'vw';
+                    fw.style.animationDuration = 1 + Math.random() * 2 + 's';
+                });
+            });
+        }
+
+        function createExplosion(x, y) {
+            const container = document.createElement('div');
+            container.className = 'firework-particles';
+            container.style.left = x + 'px';
+            container.style.top = y + 'px';
+            document.body.appendChild(container);
+
+            const colors = ['#ff0000', '#ffd700', '#ff69b4', '#00ff00', '#ff4500'];
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const angle = (i / 30) * Math.PI * 2;
+                const velocity = 50 + Math.random() * 50;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${particle.style.background}`;
+                
+                container.appendChild(particle);
+            }
+
+            setTimeout(() => container.remove(), 1000);
+        }
+
+        createStars();
+        createFireworks();
+    </script>
+</body>
+</html> 
